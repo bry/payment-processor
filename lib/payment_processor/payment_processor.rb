@@ -2,8 +2,7 @@ require 'date'
 require './lib/payment_processor/payout'
 
 class PaymentProcessor
-  attr_reader :transactions
-  attr_reader :payouts
+  attr_reader :transactions, :payouts
 
   def initialize
     @transactions = []
