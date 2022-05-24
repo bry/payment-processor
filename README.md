@@ -128,3 +128,9 @@ Sample payment_processor_spec.rb RSpecs
 ```console
 > bundle exec rspec
 ```
+
+## Improvements
+- RSpec standard output suppression
+- Audit methods output cleanup
+- More specs, boundary case specs
+- require cleanup

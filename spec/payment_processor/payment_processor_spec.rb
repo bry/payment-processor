@@ -41,6 +41,22 @@ describe PaymentProcessor do
       merchant_amazon
     )
   }
+  let(:cc_transaction_past) {
+    CreditCardTransaction.new(
+      credit_card,
+      (Date.today - 5),
+      6.55,
+      merchant_amazon
+    )
+  }
+  let(:cc_transaction_future) {
+    CreditCardTransaction.new(
+      credit_card,
+      (Date.today + 5),
+      6.55,
+      merchant_amazon
+    )
+  }
 
   describe '#accept(payment)' do
     context 'when accepting a bank transaction' do
@@ -73,6 +89,20 @@ describe PaymentProcessor do
         expect(payment_processor.payouts.last.transactions.first.merchant.name).to eq("Amazon")
       end
     end
+
+    context 'when accepted past and future transactions' do
+      it "adds two transactions to amazon merchant payout with correct lump sum payout" do
+        payment_processor = PaymentProcessor.new
+        payment_processor.accept(bank_transaction)
+        payment_processor.accept(cc_transaction)
+        payment_processor.accept(cc_transaction_past)
+        payment_processor.accept(cc_transaction_future)
+        payment_processor.payout(Date.today)
+        expect(payment_processor.payouts.last.transactions.count).to eq(2)
+        expect(payment_processor.payouts.last.lump_sum_payout).to eq(12.120099999999999)
+      end
+    end
+
   end
 
   describe '#audit_date_and_merchant(date, merchant)' do
