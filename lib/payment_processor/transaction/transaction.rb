@@ -1,7 +1,7 @@
 class Transaction
   attr_accessor :date_paid_out, :bill_me_on_date, :dollar_amount
 
-  def initialize()
+  def initialize
     @date_paid_out = nil
   end
 
