@@ -8,6 +8,7 @@ A payment processor simulator
 - Exception on any expiry date in the past
 - Bank routing numbers are validated
 - Payouts made net of fees assessed at 2.9% + 30c per transaction or 1% + $1 for a bank transfer
+- Transactions marked paid via date_paid_out after payout processing
 
 ## Usage
 main.rb is the program entry point
@@ -99,20 +100,22 @@ require 'base64'
 # 1. Generate a private.pem key file
 # > openssl genrsa -des3 -out private.pem 2048
 # config/rsa/private.pem
+#
 # 2. password: paymentprocessor
+# 
 # 3. Generate public.pem keyfile
 # > openssl rsa -in private.pem -out public.pem -outform PEM -pubout
 # config/rsa/public.pem
 
 # Encrypt a string using public.pem keyfile
-public_key_file = "./lib/payment_processor/public.pem"
+public_key_file = "./config/rsa/public.pem"
 string = "Hello World!"
 public_key = OpenSSL::PKey::RSA.new(File.read(public_key_file))
 encrypted_string = Base64.encode64(public_key.public_encrypt(string))
 p encrypted_string
 
 # Decrypt an encrypted string using private.pem keyfile
-private_key_file = './lib/payment_processor/private.pem';
+private_key_file = './config/rsa/private.pem';
 password = 'paymentprocessor'
 private_key = OpenSSL::PKey::RSA.new(File.read(private_key_file),password)
 string = private_key.private_decrypt(Base64.decode64(encrypted_string))
@@ -134,3 +137,4 @@ Sample payment_processor_spec.rb RSpecs
 - Audit methods output cleanup
 - More specs, boundary case specs
 - require cleanup
+- Web or desktop app w/ database
