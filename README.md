@@ -134,7 +134,10 @@ Sample payment_processor_spec.rb RSpecs
 
 ## Improvements
 - RSpec standard output suppression
-- Audit methods output cleanup
+- Audit methods output format cleanup
+- In payout.rb, instead of calculate_lump_sum_payout, consider running sum
+- In payment_processor.rb, consider selecting transactions in one pass
 - More specs, boundary case specs
-- require cleanup
+- 'require' cleanup
 - Web or desktop app w/ database
+- Use cents (int) to transfer, store, and calculate price data, etc.

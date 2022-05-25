@@ -20,7 +20,7 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
-  rspec
+  rspec (~> 3.11.0)
 
 BUNDLED WITH
    2.2.32

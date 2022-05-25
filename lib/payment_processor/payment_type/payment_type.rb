@@ -2,7 +2,7 @@ require 'openssl'
 require 'base64'
 
 class PaymentType
-  PUBLIC_KEY_FILE = "./config/rsa/public.pem"
+  PUBLIC_KEY_FILE = "./config/rsa/public.pem".freeze
 
   protected
 

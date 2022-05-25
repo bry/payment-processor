@@ -1,7 +1,8 @@
 require './lib/payment_processor/transaction/transaction'
 
 class BankTransaction < Transaction
-  attr_reader :account_number, :routing_number, :bill_me_on_date, :dollar_amount, :merchant
+  BANK_FEE_PERCENTAGE = 0.01
+  BANK_FEE_DOLLAR_AMOUNT = 1
 
   def initialize(payment_type, bill_me_on_date, dollar_amount, merchant)
     @payment_type = payment_type
@@ -17,17 +18,17 @@ class BankTransaction < Transaction
   end
 
   def processing_fee
-    @processing_fee
+    @processing_fee || 0
   end
 
   def payout
-    @payout
+    @payout || 0
   end
 
   private
 
   def process_fee
-    @processing_fee = dollar_amount * 0.01 + 1
+    @processing_fee = dollar_amount * BANK_FEE_PERCENTAGE + BANK_FEE_DOLLAR_AMOUNT
   end
 
   def process_payout

@@ -41,26 +41,28 @@ class PaymentProcessor
 
   # Create a payout per merchant from selected transactions
   def merchant_payouts
-    _merchant_payouts = {}
+    merchant_payouts = {}
     selected_transactions.each do |txn|
-      if _merchant_payouts.keys.include?(txn.merchant.name)
-        _merchant_payouts[txn.merchant.name].add(txn)
+      transaction_merchant_name = txn.merchant.name
+
+      if merchant_payouts.keys.include?(transaction_merchant_name)
+        merchant_payouts[transaction_merchant_name].add(txn)
       else
-        _merchant_payouts[txn.merchant.name] = Payout.new(txn)
+        merchant_payouts[transaction_merchant_name] = Payout.new(txn)
       end
 
       txn.date_paid_out = @date
     end
-    _merchant_payouts
+    merchant_payouts
   end
 
   # Add to payouts
   def date_payouts
-    _payouts = []
+    this_payout = []
     merchant_payouts.each_value do |payout|
       @payouts << payout
-      _payouts << payout
+      this_payout << payout
     end
-    _payouts
+    this_payout
   end
 end
