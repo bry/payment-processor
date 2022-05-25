@@ -99,7 +99,7 @@ describe PaymentProcessor do
         payment_processor.accept(cc_transaction_future)
         payment_processor.payout(Date.today)
         expect(payment_processor.payouts.last.transactions.count).to eq(2)
-        expect(payment_processor.payouts.last.lump_sum_payout).to eq(12.120099999999999)
+        expect(payment_processor.payouts.last.lump_sum_payout.round(2)).to eq(12.12)
       end
     end
 
